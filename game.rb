@@ -28,7 +28,6 @@ class Game
         puts "Already Exists!"
         next
       end
-      # puts "Winner is " + winner unless winner == nil
       break if winner != nil
       if player == @player1
         @player1.turn, @player2.turn = false, true
@@ -59,9 +58,8 @@ class Game
 
   def winner
     the_winner = nil
-    the_winner = check_horizontally
+    the_winner = check_horizontally || check_vertically || check_diagonally
     puts "#{the_winner} Wins!" if the_winner != nil
-    # unless check_horizontally == nil
     return the_winner
   end
 
@@ -74,6 +72,32 @@ class Game
       winning_sign = @tictactoe_board.board[1][i]
     elsif (@tictactoe_board.board[2][i] == @tictactoe_board.board[2][i+1] &&  @tictactoe_board.board[2][i+1] == @tictactoe_board.board[2][i+2])
       winning_sign = @tictactoe_board.board[2][i]
+    end
+    winning_sign = nil unless (winning_sign.eql?("X") || winning_sign.eql?("O"))
+    return winning_sign
+  end
+
+  def check_vertically
+    i = 0
+    winning_sign = nil
+    if (@tictactoe_board.board[i][0] == @tictactoe_board.board[i+1][0] &&  @tictactoe_board.board[i+1][0] == @tictactoe_board.board[i+2][0])
+      winning_sign = @tictactoe_board.board[i][0]
+    elsif (@tictactoe_board.board[i][1] == @tictactoe_board.board[i+1][1] &&  @tictactoe_board.board[i+1][1] == @tictactoe_board.board[i+2][1])
+      winning_sign = @tictactoe_board.board[i][1]
+    elsif (@tictactoe_board.board[i][2] == @tictactoe_board.board[i+1][2] &&  @tictactoe_board.board[i+1][2] == @tictactoe_board.board[i+2][2])
+      winning_sign = @tictactoe_board.board[i][2]
+    end
+    winning_sign = nil unless (winning_sign.eql?("X") || winning_sign.eql?("O"))
+    return winning_sign
+  end
+
+  def check_diagonally
+    i = 0
+    winning_sign = nil
+    if (@tictactoe_board.board[i][i] == @tictactoe_board.board[i+1][i+1] &&  @tictactoe_board.board[i+1][i+1] == @tictactoe_board.board[i+2][i+2])
+      winning_sign = @tictactoe_board.board[i][i]
+    elsif (@tictactoe_board.board[i][i+2] == @tictactoe_board.board[i+1][i+1] &&  @tictactoe_board.board[i+1][i+1] == @tictactoe_board.board[i+2][i])
+      winning_sign = @tictactoe_board.board[i+2][i]
     end
     winning_sign = nil unless (winning_sign.eql?("X") || winning_sign.eql?("O"))
     return winning_sign
