@@ -10,10 +10,11 @@ class Game
     name = askName()
     @player2 = Player.new(name, "O")
     puts "GAME READY!"
+    @tictactoe_board.board_positions
   end
 
   def play_game
-    @tictactoe_board.display_board
+    # @tictactoe_board.display_board
     while game_incomplete? do
       player = players_turn
       print "\n#{player.name}'s turn. Enter your move: "
@@ -58,49 +59,9 @@ class Game
 
   def winner
     the_winner = nil
-    the_winner = check_horizontally || check_vertically || check_diagonally
+    the_winner = @tictactoe_board.check_horizontally || @tictactoe_board.check_vertically || @tictactoe_board.check_diagonally
     puts "#{the_winner} Wins!" if the_winner != nil
     return the_winner
-  end
-
-  def check_horizontally
-    i = 0
-    winning_sign = nil
-    if (@tictactoe_board.board[0][i] == @tictactoe_board.board[0][i+1] &&  @tictactoe_board.board[0][i+1] == @tictactoe_board.board[0][i+2])
-      winning_sign = @tictactoe_board.board[0][i]
-    elsif (@tictactoe_board.board[1][i] == @tictactoe_board.board[1][i+1] &&  @tictactoe_board.board[1][i+1] == @tictactoe_board.board[1][i+2])
-      winning_sign = @tictactoe_board.board[1][i]
-    elsif (@tictactoe_board.board[2][i] == @tictactoe_board.board[2][i+1] &&  @tictactoe_board.board[2][i+1] == @tictactoe_board.board[2][i+2])
-      winning_sign = @tictactoe_board.board[2][i]
-    end
-    winning_sign = nil unless (winning_sign.eql?("X") || winning_sign.eql?("O"))
-    return winning_sign
-  end
-
-  def check_vertically
-    i = 0
-    winning_sign = nil
-    if (@tictactoe_board.board[i][0] == @tictactoe_board.board[i+1][0] &&  @tictactoe_board.board[i+1][0] == @tictactoe_board.board[i+2][0])
-      winning_sign = @tictactoe_board.board[i][0]
-    elsif (@tictactoe_board.board[i][1] == @tictactoe_board.board[i+1][1] &&  @tictactoe_board.board[i+1][1] == @tictactoe_board.board[i+2][1])
-      winning_sign = @tictactoe_board.board[i][1]
-    elsif (@tictactoe_board.board[i][2] == @tictactoe_board.board[i+1][2] &&  @tictactoe_board.board[i+1][2] == @tictactoe_board.board[i+2][2])
-      winning_sign = @tictactoe_board.board[i][2]
-    end
-    winning_sign = nil unless (winning_sign.eql?("X") || winning_sign.eql?("O"))
-    return winning_sign
-  end
-
-  def check_diagonally
-    i = 0
-    winning_sign = nil
-    if (@tictactoe_board.board[i][i] == @tictactoe_board.board[i+1][i+1] &&  @tictactoe_board.board[i+1][i+1] == @tictactoe_board.board[i+2][i+2])
-      winning_sign = @tictactoe_board.board[i][i]
-    elsif (@tictactoe_board.board[i][i+2] == @tictactoe_board.board[i+1][i+1] &&  @tictactoe_board.board[i+1][i+1] == @tictactoe_board.board[i+2][i])
-      winning_sign = @tictactoe_board.board[i+2][i]
-    end
-    winning_sign = nil unless (winning_sign.eql?("X") || winning_sign.eql?("O"))
-    return winning_sign
   end
 
   def map_coordinates(coordinates)
